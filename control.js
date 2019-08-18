@@ -36,7 +36,7 @@ export const sendStop = () => sendAct('stop');
 
 /**
  * Tell browser view to close tab
- * @param {number} id - BrowserView's id of the tab to be closed
+ * @param {TabID} id
  */
 export const sendCloseTab = id => ipcRenderer.send('close-tab', id);
 
@@ -48,7 +48,7 @@ export const sendNewTab = url => ipcRenderer.send('new-tab', url);
 
 /**
  * Tell browser view to switch to specified tab
- * @param {number} id - Target BrowserView's id
+ * @param {TabID} id
  */
 export const sendSwitchTab = id => ipcRenderer.send('switch-tab', id);
 

@@ -6,6 +6,33 @@ log.transports.file.level = false;
 log.transports.console.level = false;
 
 /**
+ * @typedef {number} TabID
+ * @description BrowserView's id as tab id
+ */
+
+/**
+ * @typedef {object} Tab
+ * @property {string} url - tab's url
+ * @property {string} title - tab's title
+ * @property {string} favicon - tab's favicon url
+ * @property {boolean} isLoading
+ * @property {boolean} canGoBack
+ * @property {boolean} canGoForward
+ */
+
+/**
+ * @typedef {Object.<TabID, Tab>} Tabs
+ */
+
+/**
+ * @typedef {object} Bounds
+ * @property {number} x
+ * @property {number} y
+ * @property {number} width
+ * @property {number} height
+ */
+
+/**
  * A browser like window
  * @param {object} options
  * @param {number} [options.width = 1024] - browser window's width
@@ -127,9 +154,9 @@ class BrowserLikeWindow extends EventEmitter {
   }
 
   /**
-   * Get control BrowserView's bounds
+   * Get control view's bounds
    *
-   * @returns {object} Bounds of control view { x, y, width, height }
+   * @returns {Bounds} Bounds of control view(exclude window's frame)
    */
   getControlBounds() {
     const winBounds = this.win.getBounds();
@@ -143,6 +170,10 @@ class BrowserLikeWindow extends EventEmitter {
     };
   }
 
+  /**
+   * Set web contents view's bounds automatically
+   * @ignore
+   */
   setContentBounds() {
     const [contentWidth, contentHeight] = this.win.getContentSize();
     const controlBounds = this.getControlBounds();
@@ -260,7 +291,7 @@ class BrowserLikeWindow extends EventEmitter {
    * Create a tab
    *
    * @param {string} [url=this.options.blankPage]
-   * @param {number} appendTo - add next to specified BrowserView
+   * @param {number} [appendTo] - add next to specified tab's id
    *
    * @fires BrowserLikeWindow#new-tab
    */
@@ -293,11 +324,19 @@ class BrowserLikeWindow extends EventEmitter {
     this.emit('new-tab', view);
   }
 
+  /**
+   * Swith to tab
+   * @param {TabID} viewId
+   */
   switchTab(viewId) {
     log.debug('switch to tab', viewId);
     this.setCurrentView(viewId);
   }
 
+  /**
+   * Destroy tab
+   * @param {TabID} viewId
+   */
   destroyView(viewId) {
     const view = this.views[viewId];
     if (view) {
