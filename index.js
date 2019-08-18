@@ -336,6 +336,7 @@ class BrowserLikeWindow extends EventEmitter {
   /**
    * Destroy tab
    * @param {TabID} viewId
+   * @ignore
    */
   destroyView(viewId) {
     const view = this.views[viewId];

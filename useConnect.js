@@ -23,6 +23,7 @@ export default function useConnect({ onTabsUpdate = noop, onTabActive = noop }) 
     ipcRenderer.on('tabs-update', (e, v) => {
       setTabIDs(v.tabs);
       setTabs(v.confs);
+      onTabsUpdate(v);
     });
 
     ipcRenderer.on('active-update', (e, v) => {
