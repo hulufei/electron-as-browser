@@ -6,10 +6,7 @@
   "author": "hui.liu",
   "license": "MIT",
   "scripts": {
-    "doc:control": "documentation readme control.js --section=Controls",
-    "doc:index": "documentation readme index.js --section=API",
-    "doc:hook": "documentation readme useConnect.js --section=useConnect",
-    "docs": "npm run doc:index && npm run doc:control"
+    "docs": "documentation build *.js -f html -o docs"
   },
   "dependencies": {
     "electron-log": "^3.0.7"
