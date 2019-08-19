@@ -106,6 +106,13 @@ class BrowserLikeWindow extends EventEmitter {
         log.debug('on control-ready');
         this.ipc = e;
         this.newTab(this.options.startPage || '');
+        /**
+         * control-ready event.
+         *
+         * @event BrowserLikeWindow#control-ready
+         * @type {IpcMainEvent}
+         */
+        this.emit('control-ready', e);
       },
       'url-change': (e, url) => {
         this.setTabConfig(this.currentViewId, { url });
