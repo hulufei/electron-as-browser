@@ -17,24 +17,32 @@ export default function useConnect({ onTabsUpdate = noop, onTabActive = noop }) 
   const [tabIDs, setTabIDs] = useState([]);
   const [activeID, setActiveID] = useState(null);
 
+  const channels = [
+    [
+      'tabs-update',
+      (e, v) => {
+        setTabIDs(v.tabs);
+        setTabs(v.confs);
+        onTabsUpdate(v);
+      }
+    ],
+    [
+      'active-update',
+      (e, v) => {
+        setActiveID(v);
+        const activeTab = tabs[v] || {};
+        onTabActive(activeTab);
+      }
+    ]
+  ];
+
   useEffect(() => {
     ipcRenderer.send('control-ready');
 
-    ipcRenderer.on('tabs-update', (e, v) => {
-      setTabIDs(v.tabs);
-      setTabs(v.confs);
-      onTabsUpdate(v);
-    });
-
-    ipcRenderer.on('active-update', (e, v) => {
-      setActiveID(v);
-      const activeTab = tabs[v] || {};
-      onTabActive(activeTab);
-    });
+    channels.forEach(([name, listener]) => ipcRenderer.on(name, listener));
 
     return () => {
-      ipcRenderer.removeAllListeners('tabs-update');
-      ipcRenderer.removeAllListeners('active-update');
+      channels.forEach(([name, listener]) => ipcRenderer.removeListener(name, listener));
     };
   }, []);
 

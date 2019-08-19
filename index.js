@@ -103,6 +103,7 @@ class BrowserLikeWindow extends EventEmitter {
 
     const channels = Object.entries({
       'control-ready': e => {
+        log.debug('on control-ready');
         this.ipc = e;
         this.newTab(this.options.startPage || '');
       },
