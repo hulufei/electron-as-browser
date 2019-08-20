@@ -91,6 +91,7 @@ class BrowserLikeWindow extends EventEmitter {
       const webContents = this.currentWebContents;
       const action = webContents && webContents[actionName];
       if (typeof action === 'function') {
+        if (actionName === 'reload' && webContents.getURL() === '') return;
         action.call(webContents);
         log.debug(
           `do webContents action ${actionName} for ${this.currentViewId}:${webContents &&
