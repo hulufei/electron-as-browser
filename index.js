@@ -85,7 +85,7 @@ class BrowserLikeWindow extends EventEmitter {
     this.win.addBrowserView(this.controlView);
     this.controlView.setBounds(this.getControlBounds());
     this.controlView.setAutoResize({ width: true });
-    this.controlView.webContents.loadFile(controlPanel);
+    this.controlView.webContents.loadURL(controlPanel);
 
     const webContentsAct = actionName => {
       const webContents = this.currentWebContents;
