@@ -63,6 +63,8 @@ const ControlPanel = () => {
 }
 ```
 
+**NOTE: make sure to setup local bundler to compile es6 code for `electron-as-browser/useConnect`, most bundler will not compile code in node_modules by default. Or you can just copy the code, it's a simple function.**
+
 For non-react users, you have to setup ipc channels yourself, there are three steps:
 
 -   `ipcRenderer.send('control-ready')` on dom ready
@@ -95,8 +97,6 @@ import {
 } from 'electron-as-browser/control';
 ```
 
-See [examples](./examples) for a full control interface implementation.
-
-**NOTE: make sure to setup local bundler to compile es6 code for `electron-as-browser/useConnect` and `electron-as-browser/control`, most bundler will not compile code in node_modules by default.**
+See [example](./example) for a full control interface implementation.
 
 ## [Docs](./docs/index.html)

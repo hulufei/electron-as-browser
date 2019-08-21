@@ -1,3 +1,5 @@
+.cache/
+dist/
 # Logs
 logs
 *.log

@@ -6,13 +6,16 @@
   "author": "hui.liu",
   "license": "MIT",
   "scripts": {
-    "docs": "documentation build *.js -f html -o docs"
+    "docs": "documentation build *.js -f html -o docs",
+    "compile": "parcel example/renderer/control.html",
+    "start": "electron example/main.js"
   },
   "dependencies": {
     "electron-log": "^3.0.7"
   },
   "devDependencies": {
     "electron": "6.0.1",
+    "parcel-bundler": "^1.12.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
