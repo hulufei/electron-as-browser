@@ -287,6 +287,10 @@ class BrowserLikeWindow extends EventEmitter {
     webContents.loadURL(url);
 
     this.setContentBounds();
+
+    if (this.options.debug) {
+      webContents.openDevTools({ mode: 'detach' });
+    }
   }
 
   setCurrentView(viewId) {
