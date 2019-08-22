@@ -98,4 +98,10 @@ import {
 
 See [example](./example) for a full control interface implementation.
 
+### Run Example
+
+- yarn install
+- yarn start:control
+- yarn start
+
 ## [API](./docs/index.html)
