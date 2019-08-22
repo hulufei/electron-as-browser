@@ -77,7 +77,9 @@ class BrowserLikeWindow extends EventEmitter {
 
     this.controlView = new BrowserView({
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        // Allow loadURL with file path in dev environment
+        webSecurity: false
       }
     });
 
