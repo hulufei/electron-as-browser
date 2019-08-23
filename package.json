@@ -1,7 +1,7 @@
 {
   "name": "electron-as-browser",
   "version": "1.0.0",
-  "description": "Make electron like browser easier and flexible.",
+  "description": "Make electron like browser easy and flexible.",
   "keywords": [
     "electron",
     "browser",
