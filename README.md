@@ -104,4 +104,4 @@ See [example](./example) for a full control interface implementation.
 - yarn start:control
 - yarn start
 
-## [API](./docs/index.html)
+## [API](https://hulufei.github.io/electron-as-browser/)
