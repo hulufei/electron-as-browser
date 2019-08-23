@@ -2,9 +2,25 @@
   "name": "electron-as-browser",
   "version": "1.0.0",
   "description": "Make electron like browser easier and flexible.",
+  "keywords": [
+    "electron",
+    "browser",
+    "navigation",
+    "tab",
+    "addressbar"
+  ],
   "main": "index.js",
   "author": "hui.liu",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hulufei/electron-as-browser"
+  },
+  "files": [
+    "index.js",
+    "useConnect.js",
+    "control.js"
+  ],
   "scripts": {
     "docs": "documentation build *.js -f html -o docs",
     "start:control": "npx babel --watch example/renderer/control.jsx --out-file example/renderer/control-compiled.js",
