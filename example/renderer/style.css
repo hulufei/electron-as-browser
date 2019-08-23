@@ -93,9 +93,6 @@ body {
   display: flex;
   align-items: center;
 }
-.bookmark-bar {
-  margin-top: 10px;
-}
 .actions {
   flex-shrink: 0;
   display: flex;
