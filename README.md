@@ -4,6 +4,8 @@
 
 A node module to help build	browser like windows in electron.
 
+![./screenshot.png](./screenshot.png)
+
 ## Features
 
 -   Made with [BrowserView](https://electronjs.org/docs/api/browser-view) instead of [webview](https://electronjs.org/docs/api/webview-tag)
@@ -61,8 +63,6 @@ const ControlPanel = () => {
   );
 }
 ```
-
-**NOTE: make sure to setup local bundler to compile es6 code for `electron-as-browser/useConnect`, most bundler will not compile code in node_modules by default. Or you can just copy the [code](./useConnect.js), it's a simple function.**
 
 For non-react users, you have to setup ipc channels yourself, there are three steps:
 

@@ -1,11 +1,13 @@
 const { app } = require('electron');
+const fileUrl = require('file-url');
 const BrowserLikeWindow = require('../index');
 
 let browser;
 
 function createWindow() {
   browser = new BrowserLikeWindow({
-    controlPanel: 'http://localhost:1234',
+    controlHeight: 99,
+    controlPanel: fileUrl(`${__dirname}/renderer/control.html`),
     startPage: 'https://google.com',
     blankTitle: 'New tab',
     debug: true // will open controlPanel's devtools
