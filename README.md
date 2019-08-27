@@ -59,7 +59,7 @@ const useConnect = require('electron-as-browser/useConnect');
 const ControlPanel = () => {
   const { tabs, tabIDs, activeID } = useConnect();
   return (
-    <div>Use tabs informations to render your control panel</div>
+    <div>Use tabs' information to render your control panel</div>
   );
 }
 ```
@@ -74,9 +74,9 @@ Don't forget to `removeListener` on `ipcRenderer` once control panel unmounted.
 
 Once setup ipc channels, you'll get all your control panel needed informations:
 
--   [`tabs`](./docs/index.html#tabs) an object contains all the opened tab's informations
--   [`tabIDs`](./docs/index.html#tabid) array of opened tab's ids
--   [`activeID`](./docs/index.html#tabid) current active tab's id
+-   [`tabs`](https://hulufei.github.io/electron-as-browser/#tabs) an object contains all the opened tab's informations
+-   [`tabIDs`](https://hulufei.github.io/electron-as-browser/#tabid) array of opened tab's ids
+-   [`activeID`](https://hulufei.github.io/electron-as-browser/#tabid) current active tab's id
 
 Construct and style your control interface as your like.
 
