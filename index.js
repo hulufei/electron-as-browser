@@ -263,6 +263,13 @@ class BrowserLikeWindow extends EventEmitter {
     if (!url || !currentView) return;
 
     const { id, webContents } = currentView;
+    
+    //handle new-window event
+    webContents.on('new-window', (event, url) => {
+      event.preventDefault()
+      log.debug('new-window', { title: webContents.getTitle() });
+      this.newTab(url, id)
+    });
 
     // Keep event in order
     webContents.on('did-start-loading', () => {
