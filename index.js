@@ -264,6 +264,21 @@ class BrowserLikeWindow extends EventEmitter {
 
     const { id, webContents } = currentView;
 
+    webContents.on('new-window', (e, newUrl, frameName, disposition, winOptions) => {
+      e.preventDefault();
+
+      if (disposition === 'new-window') {
+        log.debug('Popup in new window', { disposition, newUrl });
+        const popWin = new BrowserWindow(winOptions);
+        popWin.loadURL(newUrl);
+        // eslint-disable-next-line no-param-reassign
+        e.newGuest = popWin;
+      } else {
+        log.debug('Popup in new tab', { disposition, newUrl });
+        this.newTab(newUrl, id);
+      }
+    });
+
     // Keep event in order
     webContents.on('did-start-loading', () => {
       log.debug('did-start-loading', { title: webContents.getTitle() });
@@ -320,7 +335,12 @@ class BrowserLikeWindow extends EventEmitter {
    */
   newTab(url, appendTo) {
     const view = new BrowserView({
-      webPreferences: this.options.viewReferences
+      webPreferences: {
+        // Set sandbox to support window.opener
+        // See: https://github.com/electron/electron/issues/1865#issuecomment-249989894
+        sandbox: true,
+        ...this.options.viewReferences
+      }
     });
 
     if (appendTo) {
