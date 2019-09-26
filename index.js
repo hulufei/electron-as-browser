@@ -114,8 +114,8 @@ class BrowserLikeWindow extends EventEmitter {
 
     const channels = Object.entries({
       'control-ready': e => {
-        log.debug('on control-ready');
         this.ipc = e;
+
         this.newTab(this.options.startPage || '');
         /**
          * control-ready event.
@@ -158,7 +158,18 @@ class BrowserLikeWindow extends EventEmitter {
       }
     });
 
-    channels.forEach(([name, listener]) => ipcMain.on(name, listener));
+    channels
+      .map(([name, listener]) => [
+        name,
+        (e, ...args) => {
+          // Support multiple BrowserLikeWindow
+          if (e.sender === this.controlView.webContents) {
+            log.debug(`Trigger ${name} from ${e.sender.id}`);
+            listener(e, ...args);
+          }
+        }
+      ])
+      .forEach(([name, listener]) => ipcMain.on(name, listener));
 
     this.win.on('closed', () => {
       // Remember to clear all ipcMain events as ipcMain bind
