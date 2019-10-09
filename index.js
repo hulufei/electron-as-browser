@@ -291,34 +291,37 @@ class BrowserLikeWindow extends EventEmitter {
     });
 
     // Keep event in order
-    webContents.on('did-start-loading', () => {
-      log.debug('did-start-loading', { title: webContents.getTitle() });
-      this.setTabConfig(id, { isLoading: true });
-    });
-
-    webContents.on('did-start-navigation', (e, href, isInPlace, isMainFrame) => {
-      if (isMainFrame) {
-        log.debug('did-start-navigation', {
-          title: webContents.getTitle(),
-          href,
-          isInPlace,
-          isMainFrame
-        });
-        this.setTabConfig(id, { url: href });
-      }
-    });
-    webContents.on('page-title-updated', (e, title) => {
-      log.debug('page-title-updated', title);
-      this.setTabConfig(id, { title });
-    });
-    webContents.on('page-favicon-updated', (e, favicons) => {
-      log.debug('page-favicon-updated', favicons);
-      this.setTabConfig(id, { favicon: favicons[0] });
-    });
-    webContents.on('did-stop-loading', () => {
-      log.debug('did-stop-loading', { title: webContents.getTitle() });
-      this.setTabConfig(id, { isLoading: false });
-    });
+    webContents
+      .on('did-start-loading', () => {
+        log.debug('did-start-loading', { title: webContents.getTitle() });
+        this.setTabConfig(id, { isLoading: true });
+      })
+      .on('did-start-navigation', (e, href, isInPlace, isMainFrame) => {
+        if (isMainFrame) {
+          log.debug('did-start-navigation', {
+            title: webContents.getTitle(),
+            href,
+            isInPlace,
+            isMainFrame
+          });
+          this.setTabConfig(id, { url: href });
+        }
+      })
+      .on('page-title-updated', (e, title) => {
+        log.debug('page-title-updated', title);
+        this.setTabConfig(id, { title });
+      })
+      .on('page-favicon-updated', (e, favicons) => {
+        log.debug('page-favicon-updated', favicons);
+        this.setTabConfig(id, { favicon: favicons[0] });
+      })
+      .on('did-stop-loading', () => {
+        log.debug('did-stop-loading', { title: webContents.getTitle() });
+        this.setTabConfig(id, { isLoading: false });
+      })
+      .on('dom-ready', () => {
+        webContents.focus();
+      });
 
     webContents.loadURL(url);
 
@@ -385,6 +388,7 @@ class BrowserLikeWindow extends EventEmitter {
   switchTab(viewId) {
     log.debug('switch to tab', viewId);
     this.setCurrentView(viewId);
+    this.currentView.webContents.focus();
   }
 
   /**
