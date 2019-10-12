@@ -276,16 +276,17 @@ class BrowserLikeWindow extends EventEmitter {
     const { id, webContents } = currentView;
 
     webContents.on('new-window', (e, newUrl, frameName, disposition, winOptions) => {
+      log.debug('on new-window', { disposition, newUrl });
       e.preventDefault();
 
       if (disposition === 'new-window') {
-        log.debug('Popup in new window', { disposition, newUrl });
-        const popWin = new BrowserWindow(winOptions);
-        popWin.loadURL(newUrl);
-        // eslint-disable-next-line no-param-reassign
-        e.newGuest = popWin;
+        e.newGuest = new BrowserWindow(winOptions);
+      } else if (disposition === 'foreground-tab') {
+        this.newTab(newUrl, id);
+        // `newGuest` must be setted to prevent freeze trigger tab in case.
+        // The window will be destroyed automatically on trigger tab closed.
+        e.newGuest = new BrowserWindow({ ...winOptions, show: false });
       } else {
-        log.debug('Popup in new tab', { disposition, newUrl });
         this.newTab(newUrl, id);
       }
     });
