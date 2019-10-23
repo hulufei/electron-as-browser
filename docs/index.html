@@ -541,6 +541,14 @@
           
         </div>
       
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>references</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    
+          </div>
+          
+        </div>
+      
     </div>
   
 
@@ -1162,7 +1170,7 @@
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>newTab(url, appendTo?)</span>
+            <span class='code strong strong truncate'>newTab(url, appendTo?, references)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1172,7 +1180,7 @@
 
   <p>Create a tab</p>
 
-    <div class='pre p1 fill-light mt0'>newTab(url: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, appendTo: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?)</div>
+    <div class='pre p1 fill-light mt0'>newTab(url: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, appendTo: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?, references: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
   
   
 
@@ -1200,6 +1208,16 @@
           <div>
             <span class='code bold'>appendTo</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?)</code>
 	    add next to specified tab's id
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>references</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+            = <code>this.options.viewReferences</code>)</code>
+	    custom webPreferences to this tab
 
           </div>
           

@@ -43,8 +43,9 @@ const sendCloseTab = id => ipcRenderer.send('close-tab', id);
 /**
  * Create a new tab
  * @param {string} [url]
+ * @param {object} [references]
  */
-const sendNewTab = url => ipcRenderer.send('new-tab', url);
+const sendNewTab = (url, references) => ipcRenderer.send('new-tab', url, references);
 
 /**
  * Tell browser view to switch to specified tab

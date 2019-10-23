@@ -133,9 +133,9 @@ class BrowserLikeWindow extends EventEmitter {
         this.loadURL(url);
       },
       act: (e, actName) => webContentsAct(actName),
-      'new-tab': (e, url) => {
+      'new-tab': (e, url, references) => {
         log.debug('new-tab with url', url);
-        this.newTab(url);
+        this.newTab(url, undefined, references);
       },
       'switch-tab': (e, id) => {
         this.switchTab(id);
@@ -347,16 +347,17 @@ class BrowserLikeWindow extends EventEmitter {
    *
    * @param {string} [url=this.options.blankPage]
    * @param {number} [appendTo] - add next to specified tab's id
+   * @param {object} [references=this.options.viewReferences] - custom webPreferences to this tab
    *
    * @fires BrowserLikeWindow#new-tab
    */
-  newTab(url, appendTo) {
+  newTab(url, appendTo, references) {
     const view = new BrowserView({
       webPreferences: {
         // Set sandbox to support window.opener
         // See: https://github.com/electron/electron/issues/1865#issuecomment-249989894
         sandbox: true,
-        ...this.options.viewReferences
+        ...(references || this.options.viewReferences)
       }
     });
 
