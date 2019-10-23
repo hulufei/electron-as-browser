@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>@packages/electron-as-browser 1.0.0 | Documentation</title>
-  <meta name='description' content='Make electron like browser easier and flexible.'>
+  <title>electron-as-browser 1.0.0 | Documentation</title>
+  <meta name='description' content='Make electron like browser easy and flexible.'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
     <div class='flex'>
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>@packages/electron-as-browser</h3>
+          <h3 class='mb0 no-anchor'>electron-as-browser</h3>
           <div class='mb1'><code>1.0.0</code></div>
           <input
             placeholder='Filter'
@@ -716,7 +716,14 @@
       
         <div class='space-bottom0'>
           <span class='code bold'>url</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : tab's url
+          : tab's url(address bar)
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>href</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : tab's loaded page url(location.href)
 
           
         </div>
@@ -1430,6 +1437,27 @@
   
 
   
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>BrowserView</code>:
+        view - current browser view
+
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        [source.openedURL]
+ - opened with url
+
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>BrowserView</code>:
+        source.lastView - previous active view
+
+      
+    
+  
 
   
 
@@ -1479,7 +1507,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+            = <code>{}</code>)</code>
 	    
           </div>
           
@@ -1498,8 +1527,6 @@
               
                 <tr>
   <td class='break-word'><span class='code bold'>options.onTabsUpdate</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
-  
-    (default <code>noop</code>)
   </td>
   <td class='break-word'><span>trigger after tabs updated(title, favicon, loading etc.)
 </span></td>
@@ -1509,8 +1536,6 @@
               
                 <tr>
   <td class='break-word'><span class='code bold'>options.onTabActive</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
-  
-    (default <code>noop</code>)
   </td>
   <td class='break-word'><span>trigger after active tab changed
 </span></td>

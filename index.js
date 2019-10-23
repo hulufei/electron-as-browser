@@ -12,7 +12,8 @@ log.transports.console.level = false;
 
 /**
  * @typedef {object} Tab
- * @property {string} url - tab's url
+ * @property {string} url - tab's url(address bar)
+ * @property {string} href - tab's loaded page url(location.href)
  * @property {string} title - tab's title
  * @property {string} favicon - tab's favicon url
  * @property {boolean} isLoading
@@ -132,8 +133,9 @@ class BrowserLikeWindow extends EventEmitter {
         this.loadURL(url);
       },
       act: (e, actName) => webContentsAct(actName),
-      'new-tab': e => {
-        this.newTab();
+      'new-tab': (e, url) => {
+        log.debug('new-tab with url', url);
+        this.newTab(url);
       },
       'switch-tab': (e, id) => {
         this.switchTab(id);
@@ -305,7 +307,7 @@ class BrowserLikeWindow extends EventEmitter {
             isInPlace,
             isMainFrame
           });
-          this.setTabConfig(id, { url: href });
+          this.setTabConfig(id, { url: href, href });
         }
       })
       .on('page-title-updated', (e, title) => {
@@ -367,6 +369,7 @@ class BrowserLikeWindow extends EventEmitter {
     this.views[view.id] = view;
 
     // Add to manager first
+    const lastView = this.currentView;
     this.setCurrentView(view.id);
     view.setAutoResize({ width: true, height: true });
     this.loadURL(url || this.options.blankPage);
@@ -377,9 +380,12 @@ class BrowserLikeWindow extends EventEmitter {
      * new-tab event.
      *
      * @event BrowserLikeWindow#new-tab
+     * @return {BrowserView} view - current browser view
+     * @return {string} [source.openedURL] - opened with url
+     * @return {BrowserView} source.lastView - previous active view
      * @type {BrowserView}
      */
-    this.emit('new-tab', view);
+    this.emit('new-tab', view, { openedURL: url, lastView });
   }
 
   /**
