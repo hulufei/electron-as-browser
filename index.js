@@ -46,6 +46,7 @@ log.transports.console.level = false;
  * @param {string} [options.startPage = ''] - start page to load on browser open
  * @param {string} [options.blankPage = ''] - blank page to load on new tab
  * @param {string} [options.blankTitle = 'about:blank'] - blank page's title
+ * @param {function} [options.onNewWindow] - custom webContents `new-window` event handler
  * @param {boolean} [options.debug] - toggle debug
  */
 class BrowserLikeWindow extends EventEmitter {
@@ -277,7 +278,7 @@ class BrowserLikeWindow extends EventEmitter {
 
     const { id, webContents } = currentView;
 
-    webContents.on('new-window', (e, newUrl, frameName, disposition, winOptions) => {
+    const onNewWindow = (e, newUrl, frameName, disposition, winOptions) => {
       log.debug('on new-window', { disposition, newUrl });
       e.preventDefault();
 
@@ -291,7 +292,9 @@ class BrowserLikeWindow extends EventEmitter {
       } else {
         this.newTab(newUrl, id);
       }
-    });
+    };
+
+    webContents.on('new-window', this.options.onNewWindow || onNewWindow);
 
     // Keep event in order
     webContents
