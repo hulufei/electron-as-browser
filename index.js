@@ -311,6 +311,14 @@ class BrowserLikeWindow extends EventEmitter {
             isMainFrame
           });
           this.setTabConfig(id, { url: href, href });
+          /**
+           * url-updated event.
+           *
+           * @event BrowserLikeWindow#url-updated
+           * @return {BrowserView} view - current browser view
+           * @return {string} href - updated url
+           */
+          this.emit('url-updated', { view: currentView, href });
         }
       })
       .on('page-title-updated', (e, title) => {
@@ -387,7 +395,6 @@ class BrowserLikeWindow extends EventEmitter {
      * @return {BrowserView} view - current browser view
      * @return {string} [source.openedURL] - opened with url
      * @return {BrowserView} source.lastView - previous active view
-     * @type {BrowserView}
      */
     this.emit('new-tab', view, { openedURL: url, lastView });
   }
