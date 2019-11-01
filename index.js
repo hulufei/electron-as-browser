@@ -397,6 +397,7 @@ class BrowserLikeWindow extends EventEmitter {
      * @return {BrowserView} source.lastView - previous active view
      */
     this.emit('new-tab', view, { openedURL: url, lastView });
+    return view;
   }
 
   /**
