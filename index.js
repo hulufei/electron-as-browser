@@ -68,13 +68,6 @@ class BrowserLikeWindow extends EventEmitter {
       height
     });
 
-    /**
-     * closed event
-     *
-     * @event BrowserLikeWindow#closed
-     */
-    this.win.on('closed', () => this.emit('closed'));
-
     this.defCurrentViewId = null;
     this.defTabConfigs = {};
     // Prevent browser views garbage collected
@@ -166,7 +159,7 @@ class BrowserLikeWindow extends EventEmitter {
         name,
         (e, ...args) => {
           // Support multiple BrowserLikeWindow
-          if (e.sender === this.controlView.webContents) {
+          if (this.controlView && e.sender === this.controlView.webContents) {
             log.debug(`Trigger ${name} from ${e.sender.id}`);
             listener(e, ...args);
           }
@@ -174,10 +167,24 @@ class BrowserLikeWindow extends EventEmitter {
       ])
       .forEach(([name, listener]) => ipcMain.on(name, listener));
 
+    /**
+     * closed event
+     *
+     * @event BrowserLikeWindow#closed
+     */
     this.win.on('closed', () => {
       // Remember to clear all ipcMain events as ipcMain bind
       // on every new browser instance
       channels.forEach(([name, listener]) => ipcMain.removeListener(name, listener));
+
+      // Prevent BrowserView memory leak on close
+      this.tabs.forEach(id => this.destroyView(id));
+      if (this.controlView) {
+        this.controlView.destroy();
+        this.controlView = null;
+        log.debug('Control view destroyed');
+      }
+      this.emit('closed');
     });
 
     if (this.options.debug) {
