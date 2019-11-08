@@ -199,12 +199,10 @@ class BrowserLikeWindow extends EventEmitter {
    * @returns {Bounds} Bounds of control view(exclude window's frame)
    */
   getControlBounds() {
-    const winBounds = this.win.getBounds();
     const contentBounds = this.win.getContentBounds();
-    const y = process.platform === 'darwin' ? contentBounds.y - winBounds.y : 0;
     return {
       x: 0,
-      y,
+      y: 0,
       width: contentBounds.width,
       height: this.options.controlHeight || 130
     };
