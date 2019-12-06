@@ -304,13 +304,12 @@ class BrowserLikeWindow extends EventEmitter {
     // Keep event in order
     webContents
       .on('did-start-loading', () => {
-        log.debug('did-start-loading', { title: webContents.getTitle() });
+        log.debug('did-start-loading > set loading');
         this.setTabConfig(id, { isLoading: true });
       })
       .on('did-start-navigation', (e, href, isInPlace, isMainFrame) => {
         if (isMainFrame) {
-          log.debug('did-start-navigation', {
-            title: webContents.getTitle(),
+          log.debug('did-start-navigation > set url address', {
             href,
             isInPlace,
             isMainFrame
@@ -325,6 +324,11 @@ class BrowserLikeWindow extends EventEmitter {
            */
           this.emit('url-updated', { view: currentView, href });
         }
+      })
+      .on('will-redirect', (e, href) => {
+        log.debug('will-redirect > update url address', { href });
+        this.setTabConfig(id, { url: href, href });
+        this.emit('url-updated', { view: currentView, href });
       })
       .on('page-title-updated', (e, title) => {
         log.debug('page-title-updated', title);

@@ -107,7 +107,7 @@ function Control() {
 
     let href = v;
     if (!/^.*?:\/\//.test(v)) {
-      href = `https://${v}`;
+      href = `http://${v}`;
     }
     action.sendEnterURL(href);
   };
