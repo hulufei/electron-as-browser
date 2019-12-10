@@ -283,8 +283,22 @@ class BrowserLikeWindow extends EventEmitter {
 
     const { id, webContents } = currentView;
 
+    // Prevent addEventListeners on same webContents when enter urls in same tab
+    const MARKS = '__IS_INITIALIZED__';
+    if (webContents[MARKS]) {
+      webContents.loadURL(url);
+      return;
+    }
+
     const onNewWindow = (e, newUrl, frameName, disposition, winOptions) => {
-      log.debug('on new-window', { disposition, newUrl });
+      log.debug('on new-window', { disposition, newUrl, frameName });
+
+      if (!new URL(newUrl).host) {
+        // Handle newUrl = 'about:blank' in some cases
+        log.debug('Invalid url open with default window');
+        return;
+      }
+
       e.preventDefault();
 
       if (disposition === 'new-window') {
@@ -347,6 +361,7 @@ class BrowserLikeWindow extends EventEmitter {
       });
 
     webContents.loadURL(url);
+    webContents[MARKS] = true;
 
     this.setContentBounds();
 
