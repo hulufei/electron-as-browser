@@ -35,7 +35,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "classnames": "^2.2.6",
-    "electron": "^7.2.4",
+    "electron": "^9.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "file-url": "^2.0.2"
