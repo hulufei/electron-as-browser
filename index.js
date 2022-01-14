@@ -79,6 +79,7 @@ class BrowserLikeWindow extends EventEmitter {
 
     this.controlView = new BrowserView({
       webPreferences: {
+        contextIsolation: false,
         nodeIntegration: true,
         // Allow loadURL with file path in dev environment
         webSecurity: false,
@@ -180,7 +181,7 @@ class BrowserLikeWindow extends EventEmitter {
       // Prevent BrowserView memory leak on close
       this.tabs.forEach(id => this.destroyView(id));
       if (this.controlView) {
-        this.controlView.destroy();
+        this.controlView.webContents.destroy();
         this.controlView = null;
         log.debug('Control view destroyed');
       }
@@ -396,6 +397,8 @@ class BrowserLikeWindow extends EventEmitter {
       }
     });
 
+    view.id = view.webContents.id;
+
     if (appendTo) {
       const prevIndex = this.tabs.indexOf(appendTo);
       this.tabs.splice(prevIndex + 1, 0, view.id);
@@ -442,7 +445,7 @@ class BrowserLikeWindow extends EventEmitter {
   destroyView(viewId) {
     const view = this.views[viewId];
     if (view) {
-      view.destroy();
+      view.webContents.destroy();
       this.views[viewId] = undefined;
       log.debug(`${viewId} destroyed`);
     }
