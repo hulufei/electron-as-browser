@@ -13,6 +13,9 @@ body {
   overflow: hidden;
   user-select: none;
 }
+.draggable {
+  -webkit-app-region: drag
+}
 .tabs {
   display: flex;
   align-items: center;
@@ -29,6 +32,7 @@ body {
   max-width: 185px;
   border-left: 1px solid #999;
   cursor: default;
+  -webkit-app-region: no-drag;
 }
 .tab:first-child {
   border-left: none;
@@ -71,6 +75,9 @@ body {
 }
 .close:hover {
   background: #ddd;
+}
+.plus {
+  -webkit-app-region: no-drag;
 }
 .bars {
   padding: 10px 18px;

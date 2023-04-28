@@ -291,30 +291,19 @@ class BrowserLikeWindow extends EventEmitter {
       return;
     }
 
-    const onNewWindow = (e, newUrl, frameName, disposition, winOptions) => {
-      log.debug('on new-window', { disposition, newUrl, frameName });
+    const onNewWindow = ({url, frameName, disposition}) => {
+      log.debug('on new-window', { disposition, url, frameName });
 
-      if (!new URL(newUrl).host) {
+      if (!new URL(url).host) {
         // Handle newUrl = 'about:blank' in some cases
         log.debug('Invalid url open with default window');
         return;
       }
 
-      e.preventDefault();
-
-      if (disposition === 'new-window') {
-        e.newGuest = new BrowserWindow(winOptions);
-      } else if (disposition === 'foreground-tab') {
-        this.newTab(newUrl, id);
-        // `newGuest` must be setted to prevent freeze trigger tab in case.
-        // The window will be destroyed automatically on trigger tab closed.
-        e.newGuest = new BrowserWindow({ ...winOptions, show: false });
-      } else {
-        this.newTab(newUrl, id);
-      }
+      this.newTab(url, id);
     };
 
-    webContents.on('new-window', this.options.onNewWindow || onNewWindow);
+    webContents.setWindowOpenHandler(this.options.onNewWindow || onNewWindow);
 
     // Keep event in order
     webContents
@@ -373,7 +362,9 @@ class BrowserLikeWindow extends EventEmitter {
 
   setCurrentView(viewId) {
     if (!viewId) return;
-    this.win.removeBrowserView(this.currentView);
+    if (this.currentView != null) {
+      this.win.removeBrowserView(this.currentView);
+    }
     this.win.addBrowserView(this.views[viewId]);
     this.currentViewId = viewId;
   }

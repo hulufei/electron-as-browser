@@ -10,7 +10,11 @@ function createWindow() {
     controlPanel: fileUrl(`${__dirname}/renderer/control.html`),
     startPage: 'https://google.com',
     blankTitle: 'New tab',
-    debug: true // will open controlPanel's devtools
+    debug: true, // will open controlPanel's devtools
+    winOptions: {
+      titleBarStyle: 'hidden',
+      trafficLightPosition: { x: 15, y: 15 }
+    }
   });
 
   browser.on('closed', () => {

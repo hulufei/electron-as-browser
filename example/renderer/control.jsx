@@ -124,31 +124,33 @@ function Control() {
 
   return (
     <div className="container">
-      <div className="tabs">
-        <>
-          {tabIDs.map(id => {
-            // eslint-disable-next-line no-shadow
-            const { title, isLoading, favicon } = tabs[id] || {};
-            return (
-              <div
-                key={id}
-                className={cx('tab', { active: id === activeID })}
-                onClick={() => switchTab(id)}
-              >
-                {isLoading ? <IconLoading /> : !!favicon && <img src={favicon} width="16" alt="" />}
-                <div className="title">
-                  <div className="title-content">{title}</div>
+      <div className="draggable">
+        <div className="tabs">
+          <>
+            {tabIDs.map(id => {
+              // eslint-disable-next-line no-shadow
+              const { title, isLoading, favicon } = tabs[id] || {};
+              return (
+                <div
+                  key={id}
+                  className={cx('tab', { active: id === activeID })}
+                  onClick={() => switchTab(id)}
+                >
+                  {isLoading ? <IconLoading /> : !!favicon && <img src={favicon} width="16" alt="" />}
+                  <div className="title">
+                    <div className="title-content">{title}</div>
+                  </div>
+                  <div className="close" onClick={e => close(e, id)}>
+                    <IconClose />
+                  </div>
                 </div>
-                <div className="close" onClick={e => close(e, id)}>
-                  <IconClose />
-                </div>
-              </div>
-            );
-          })}
-          <span type="plus" style={{ marginLeft: 10 }} onClick={newTab}>
-            <IconPlus />
-          </span>
-        </>
+              );
+            })}
+            <span className="plus" type="plus" style={{ marginLeft: 10 }} onClick={newTab}>
+              <IconPlus />
+            </span>
+          </>
+        </div>
       </div>
       <div className="bars">
         <div className="bar address-bar">
