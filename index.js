@@ -89,9 +89,10 @@ class BrowserLikeWindow extends EventEmitter {
 
     // BrowserView should add to window before setup
     this.win.addBrowserView(this.controlView);
-    this.controlView.setBounds(this.getControlBounds());
     this.controlView.setAutoResize({ width: true });
     this.controlView.webContents.loadURL(controlPanel);
+    // https://github.com/electron/electron/issues/31424#issuecomment-978494007
+    this.controlView.webContents.on('did-finish-load', () => this.controlView.setBounds(this.getControlBounds()))
 
     const webContentsAct = actionName => {
       const webContents = this.currentWebContents;
