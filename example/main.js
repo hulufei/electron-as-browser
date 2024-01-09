@@ -1,6 +1,6 @@
-const { app } = require('electron');
-const fileUrl = require('file-url');
-const BrowserLikeWindow = require('../index');
+import { app } from 'electron';
+import fileUrl from 'file-url';
+import BrowserLikeWindow from '../index';
 
 let browser;
 

@@ -1,4 +1,4 @@
-import type { BrowserWindowConstructorOptions, WebPreferences, Rectangle } from 'electron';
+import type { BrowserWindow, BrowserWindowConstructorOptions, WebPreferences, Rectangle } from 'electron';
 import type { EventEmitter } from 'events';
 
 type TabID = number;
@@ -32,7 +32,9 @@ interface BrowserLikeWindowOptions {
     debug?: boolean;
 }
 
-class BrowserLikeWindow extends EventEmitter {
+export default class BrowserLikeWindow extends EventEmitter {
+    win: BrowserWindow;
+
     constructor(options: BrowserLikeWindowOptions);
     getControlBounds(): Rectangle;
     setContentBounds(): void;
@@ -59,5 +61,3 @@ class BrowserLikeWindow extends EventEmitter {
     switchTab(viewId: TabID): void;
     destroyView(viewId: TabID): void;
 }
-
-export = BrowserLikeWindow;

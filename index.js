@@ -1,6 +1,6 @@
-const { BrowserWindow, BrowserView, ipcMain } = require('electron');
-const EventEmitter = require('events');
-const log = require('electron-log');
+import { BrowserWindow, BrowserView, ipcMain } from 'electron';
+import EventEmitter from 'events';
+import log from 'electron-log';
 
 log.transports.file.level = false;
 log.transports.console.level = false;
@@ -49,7 +49,7 @@ log.transports.console.level = false;
  * @param {function} [options.onNewWindow] - custom webContents `new-window` event handler
  * @param {boolean} [options.debug] - toggle debug
  */
-class BrowserLikeWindow extends EventEmitter {
+export default class BrowserLikeWindow extends EventEmitter {
   constructor(options) {
     super();
 
@@ -451,5 +451,3 @@ class BrowserLikeWindow extends EventEmitter {
     }
   }
 }
-
-module.exports = BrowserLikeWindow;

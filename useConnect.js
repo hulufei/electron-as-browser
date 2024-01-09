@@ -1,5 +1,5 @@
-const { ipcRenderer } = require('electron');
-const { useEffect, useState } = require('react');
+import { ipcRenderer } from 'electron';
+import { useEffect, useState } from 'react';
 
 // Used in Renderer process
 
